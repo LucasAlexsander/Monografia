@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} Página Inicial {% endblock %}
+{% block content %}
+    <h1> Equipe </h1>
+    <ul>
+        {% for pesquisador in pesquisadores %}
+        <li>
+            <strong>Nome</strong> {{pesquisador.nome}} <br>
+            <strong>Titulação</strong> {{pesquisador.nivel}} <br>
+            <strong>Lattes</strong> {{pesquisador.lattes}} <br>
+            <strong>Linkdin</strong> {{pesquisador.linkedin}} <br>
+            <strong>Research Gate</strong> {{pesquisador.researchgate}} <br>
+            <strong>Email</strong> {{pesquisador.email}} <br>
+            <strong>Certo</strong> {{pesquisador.cargo}} <br>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
