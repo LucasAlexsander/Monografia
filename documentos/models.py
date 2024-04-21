@@ -31,6 +31,8 @@ class Documentos(models.Model):
         super().clean()
         if self.notaFinal is not None and self.notaFinal < 0:
             raise ValidationError('A nota final não pode ser menor que 0.')
+        elif self.notaFinal > 100:
+            raise ValidationError('A nota final não pode ser maior que 100.')
 
 
     def __str__(self):
