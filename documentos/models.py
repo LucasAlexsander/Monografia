@@ -25,7 +25,7 @@ class Documentos(models.Model):
     resumo = models.TextField(verbose_name='Resumo')
     palavrasChaves = models.TextField(verbose_name='Palavras-chaves')
     dataEntrega = models.DateTimeField(verbose_name='Data de Entrega')
-    arquivo = models.FileField(upload_to='pdfs/', blank=True, verbose_name='Documento em PDF')
+    arquivo = models.FileField(upload_to='documentos/pdfs/', blank=True, verbose_name='Documento em PDF')
     notaFinal = models.FloatField(null=True, blank=True, verbose_name='Nota final')
     areaConcentracao = models.CharField(max_length=50, null=True, blank=True, choices=AREAS_CHOICES, verbose_name='Área de Concentração')
 
