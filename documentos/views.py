@@ -9,3 +9,7 @@ def view_pdf(request, filename):
         return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
     else:
         return HttpResponseNotFound('PDF not found')
+
+def listar_documentos(resquest):
+    documentos = Documentos.objects.all()
+    return render(resquest, 'documentos.html', {'Documentos': documentos})

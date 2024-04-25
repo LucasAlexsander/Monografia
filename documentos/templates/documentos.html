@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% block title %} Página de Monografias {% endblock %}
+{%block content %}
+<h1>Documentos</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Título</th>
+      <th scope="col">Autor</th>
+      <th scope="col">Orientador</th>
+      <th scope="col">Coorientador</th>
+      <th scope="col">Resumo</th>
+      <th scope="col">Palavras-Chaves</th>
+      <th scope="col">Data</th>
+      <th scope="col">Arquivo</th>
+      <th scope="col">Área de Concentração</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for documento in Documentos %}
+    <tr>
+      <td>{{documento.titulo}}</td>
+
+      <td>
+        {% for autor in documento.autor.all %} {{ autor.nome }}   
+          {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </td>
+
+      <td>
+        {% for orientador in documento.orientador.all %} {{ orientador.nome }}   
+          {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </td>
+
+      <td>
+        {% for coorientador in documento.coorientador.all %} {{ coorientador.nome }}   
+          {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </td>
+
+      <td>{{documento.resumo}}</td>
+      <td>{{documento.palavrasChaves}}</td>
+      <td>{{documento.dataEntrega}}</td>
+
+      {% if documento.arquivo %}
+      <td>
+        <a href="{{ documento.arquivo }}">Link</a>
+      </td>
+      {% else %}
+      <td>Nenhum arquivo disponível</td>
+      {% endif %}
+
+      <td>{{documento.get_area_concentracao_display}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

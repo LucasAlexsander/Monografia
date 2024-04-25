@@ -15,6 +15,8 @@ AREAS_CHOICES = [
     ("TIC","Tecnologia da Informação e Ciência da Computação"),
 ] 
 
+AREAS_CHOICES_DICT = dict(AREAS_CHOICES)
+
 class Documentos(models.Model):
     titulo = models.CharField(max_length=255, verbose_name='Titulo da Monografia')
     autor = models.ManyToManyField(Pesquisador, related_name='autor_requests_created')
@@ -39,3 +41,6 @@ class Documentos(models.Model):
         autores = ', '.join([str(pesquisador) for pesquisador in self.autor.all()])
         # area_concentracao_display = dict(Areas.choices)[self.areaConcentracao]
         return f"{self.titulo} ({self.palavrasChaves}) - Autores: {autores}"
+    
+    def get_area_concentracao_display(self):
+        return AREAS_CHOICES_DICT.get(self.areaConcentracao, self.areaConcentracao)
