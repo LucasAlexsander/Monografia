@@ -1,24 +1,21 @@
 {% extends 'base.html' %} {% block title %} Página de Monografias {% endblock %}
 {%block content %}
 
-<style>
-
-</style>
-
 <section style="margin: 60px">
   <div class="d-flex justify-content-between mb-2">
     <h1>Documentos</h1>
     <a class="btn btn-primary d-flex align-items-center" href="{% url 'adicionar' %}">Adicionar</a>
   </div>
+
   <table class="table">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Título</th>
+        <th><a href="?ordenacao={% if ordenacao == 'titulo' %}-titulo{% else %}titulo{% endif %}">Título</a></th>
         <th scope="col">Autor</th>
         <th scope="col">Orientador</th>
         <th scope="col">Coorientador</th>
         <th scope="col">Palavras-Chaves</th>
-        <th scope="col">Data</th>
+        <th><a href="?ordenacao={% if ordenacao == 'data' %}-data{% else %}data{% endif %}">Data</a></th>
         <th scope="col">Área de Concentração</th>
         <th scope="col">Arquivo</th>
         <th scope="col">Ações</th>
@@ -67,6 +64,39 @@
       {% endfor %}
     </tbody>
   </table>
+
+  {% for page_number in page_obj.paginator.page_range %}
+  {% if page_number == page_obj.number %}
+    <span class="page-link current">{{ page_number }}</span>
+  {% else %}
+    <a class="page-link" href="?page={{ page_number }}{% if ordenacao %}&ordenacao={{ ordenacao }}{% endif %}">{{ page_number }}</a>
+  {% endif %}
+{% endfor %}
+
+  <nav aria-label="Page navigation example" class="float-end">
+    <ul class="pagination">
+      {% if Documentos.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ Documentos.previous_page_number }}">Anterior</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+      {% endif %}
+  
+      {% for num_pagina in page_numbers %}
+        {% if num_pagina == Documentos.number %}
+          <li class="page-item active"><span class="page-link">{{ num_pagina }}</span></li>
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ num_pagina }}">{{ num_pagina }}</a></li>
+        {% endif %}
+      {% endfor %}
+  
+      {% if Documentos.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ Documentos.next_page_number }}">Próxima</a></li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Próxima</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  
 </section>
 
 <!-- Modal de confirmação -->

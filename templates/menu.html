@@ -19,26 +19,8 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'listar_equipe' %}">Equipe</a>
         </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Documentos
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="{% url 'listar_documentos' %}"
-                >Listar Todos</a
-              >
-            </li>
-            <li><a class="dropdown-item" href="{% url 'adicionar' %}">Cadastras Documentos</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'listar_documentos' %}">Documentos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
