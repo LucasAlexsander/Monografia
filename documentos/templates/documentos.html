@@ -1,8 +1,15 @@
 {% extends 'base.html' %} {% block title %} Página de Monografias {% endblock %}
 {%block content %}
 
+<style>
+
+</style>
+
 <section style="margin: 60px">
-  <h1>Documentos</h1>
+  <div class="d-flex justify-content-between mb-2">
+    <h1>Documentos</h1>
+    <a class="btn btn-primary d-flex align-items-center" href="{% url 'adicionar' %}">Adicionar</a>
+  </div>
   <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -14,35 +21,31 @@
         <th scope="col">Data</th>
         <th scope="col">Área de Concentração</th>
         <th scope="col">Arquivo</th>
+        <th scope="col">Ações</th>
       </tr>
     </thead>
     <tbody>
       {% for documento in Documentos %}
       <tr>
         <td>{{documento.titulo}}</td>
-  
         <td>
           {% for autor in documento.autor.all %} {{ autor.nome }}   
             {% if not forloop.last %}, {% endif %}
           {% endfor %}
         </td>
-  
         <td>
           {% for orientador in documento.orientador.all %} {{ orientador.nome }}   
             {% if not forloop.last %}, {% endif %}
           {% endfor %}
         </td>
-  
         <td>
           {% for coorientador in documento.coorientador.all %} {{ coorientador.nome }}   
             {% if not forloop.last %}, {% endif %}
           {% endfor %}
         </td>
-
         <td>{{documento.palavrasChaves}}</td>
         <td>{{documento.dataEntrega}}</td>  
-        <td>{{documento.get_area_concentracao_display}}</td>
-
+        <td>{{documento.areaConcentracao}}</td>
         {% if documento.arquivo %}
         <td>
           <a href="/{{ documento.arquivo }}">Link</a>
@@ -50,9 +53,68 @@
         {% else %}
         <td>Nenhum arquivo disponível</td>
         {% endif %}
+        <td>
+          <a class="btn btn-primary" href="{% url 'editar' documento.id %}">Editar</a>
+          <button type="button" 
+            class="btn btn-danger btn-deletar" 
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop" 
+            data-url="{% url 'deletar' documento.id %}">
+            Deletar
+          </button>      
+        </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </section>
+
+<!-- Modal de confirmação -->
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você realmente deseja excluir o item selecionado?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button id="confirmarDelecaoModal" type="button" class="btn btn-primary">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmação Fim -->
+
+<!-- jQuery (inclua antes do Bootstrap) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JavaScript (inclua após o jQuery) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Script JavaScript para lidar com a exclusão do documento -->
+<script>
+$('#confirmarDelecaoModal').on('click', function (event) {
+  var modal = $(this);
+
+  console.log(modal.data('url'));
+  window.location.replace(modal.data('url'));
+});
+
+$('.btn-deletar').on('click', function() {
+  var urlDeletar = $(this).data('url'); // Obtém a URL de exclusão do botão
+  $('#confirmarDelecaoModal').data('url', urlDeletar); // Define a URL de exclusão para o botão de confirmação
+});
+</script>
+
+
+
 {% endblock %}

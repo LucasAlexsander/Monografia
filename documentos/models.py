@@ -14,8 +14,16 @@ AREAS_CHOICES = [
     ("DCJ","Direito e Ciências Jurídicas"),
     ("TIC","Tecnologia da Informação e Ciência da Computação"),
 ] 
-
-AREAS_CHOICES_DICT = dict(AREAS_CHOICES)
+class Areas(models.TextChoices):
+    CSH = 'Ciências Sociais e Humanas'
+    CET = 'Ciências Exatas e Tecnológicas'
+    CSE = 'Ciências da Saúde'
+    CBA = 'Ciências Biológicas e Ambientais'
+    ACO = 'Artes e Comunicação'
+    EAO = 'Economia e Administração'
+    EDU = 'Educação'
+    DCJ = 'Direito e Ciências Jurídicas'
+    TIC = 'Tecnologia da Informação e Ciência da Computação'
 
 class Documentos(models.Model):
     titulo = models.CharField(max_length=255, verbose_name='Titulo da Monografia')
@@ -27,20 +35,12 @@ class Documentos(models.Model):
     dataEntrega = models.DateTimeField(verbose_name='Data de Entrega')
     arquivo = models.FileField(upload_to='documentos/pdfs/', blank=True, verbose_name='Documento em PDF')
     notaFinal = models.FloatField(null=True, blank=True, verbose_name='Nota final')
-    areaConcentracao = models.CharField(max_length=50, null=True, blank=True, choices=AREAS_CHOICES, verbose_name='Área de Concentração')
-
-    def clean(self):
-        super().clean()
-        if self.notaFinal is not None and self.notaFinal < 0:
-            raise ValidationError('A nota final não pode ser menor que 0.')
-        elif self.notaFinal > 100:
-            raise ValidationError('A nota final não pode ser maior que 100.')
-
+    areaConcentracao = models.CharField(max_length=50, null=True, blank=True, choices=Areas.choices, verbose_name='Área de Concentração')
+    def areaConcentracaoNome(self):
+        return dict(Areas.choices)[self.areaConcentracao]
 
     def __str__(self):
         autores = ', '.join([str(pesquisador) for pesquisador in self.autor.all()])
         # area_concentracao_display = dict(Areas.choices)[self.areaConcentracao]
         return f"{self.titulo} ({self.palavrasChaves}) - Autores: {autores}"
     
-    def get_area_concentracao_display(self):
-        return AREAS_CHOICES_DICT.get(self.areaConcentracao, self.areaConcentracao)
