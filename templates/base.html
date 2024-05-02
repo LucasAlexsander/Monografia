@@ -1,7 +1,7 @@
 {% load static %}
 
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,19 +36,19 @@
         padding: 10px 0;
       }
     </style>
-  </head>
-  <body>
-    <script type="text/javascript" src="{% static 'scripts/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
-
-    <!-- jQuery (inclua antes do Bootstrap) -->
-    <script type="text/javascript" src="{% static 'scripts/bootstrap.min.js' %}"></script>
-
     <!-- Bootstrap CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
 
-    <!-- Bootstrap JavaScript (inclua após o jQuery) -->
-    <script type="text/javascript" src="{% static 'scripts/jquery.min.js' %}"></script>
-    <!-- Script JavaScript para lidar com a exclusão do documento -->
+    <!-- jQuery -->
+    <script src="{% static 'scripts/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Bundle JS (inclui o Popper) -->
+    <script src="{% static 'scripts/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- jQuery (inclua antes do Bootstrap) -->
+    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+  </head>
+  <body>
 
     {% include 'menu.html' %}
     {% block content %}
