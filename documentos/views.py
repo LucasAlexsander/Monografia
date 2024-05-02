@@ -15,26 +15,8 @@ def view_pdf(request, filename):
         return HttpResponseNotFound('PDF not found')
 
 def listar_documentos(request):
-    obj = request.GET.get('obj')
-    
-    if obj:
-        documentos = Documentos.objects.filter(titulo__icontains=obj)
-    else:
-        documentos = Documentos.objects.all()
-    
-    paginator = Paginator(documentos, 8)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    page_numbers = [n for n in range(page_obj.number - 2, page_obj.number + 3) if 0 < n <= page_obj.paginator.num_pages] 
-    
-    # Adicione o parâmetro de ordenação à URL dos links de paginação
-    print("Query string:", request.META['QUERY_STRING'])
-
-    # Verificar se o número da página é menor que 1 e, se for, definir como 1
-    if page_obj.number < 1:
-        page_obj.number = 1
-        
-    return render(request, 'documentos.html', {'Documentos': page_obj, 'page_numbers': page_numbers});
+    documentos = Documentos.objects.all()
+    return render(request, 'documentosDataTable.html', {'Documentos': documentos})
 
 def adicionar(request):
     form = DocumentosForm(request.POST, request.FILES)
