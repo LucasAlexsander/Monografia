@@ -15,9 +15,9 @@ class DocumentosForm(forms.ModelForm):
     fields = ['titulo', 'autor', 'orientador', 'coorientador','resumo', 'dataEntrega', 'arquivo', 'notaFinal', 'areaConcentracao', 'palavrasChaves']
     widgets = {
       'titulo': forms.TextInput(attrs={'placeholder': 'Entre com o titulo da monografia'}),
-      'dataEntrega': forms.DateInput(attrs={'id': 'dataAtualCampo'}),
+      'dataEntrega': forms.DateInput(attrs={'id': 'dataAtualCampo', 'placeholder': 'DD/MM/YYYY'}),
       'arquivo': forms.FileInput(attrs={'id': 'arquivo'}),
-      'notaFinal': forms.NumberInput(attrs={'placeholder': 'Entre com a nota final da monografia'}),
+      #'notaFinal': forms.NumberInput(attrs={'placeholder': 'Entre com a nota final da monografia'}),
       'palavrasChaves': forms.Textarea(attrs={'placeholder': 'Entre com as palavras-chaves da monografia'})
     }
     
