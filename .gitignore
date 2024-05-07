@@ -1,2 +1,2 @@
 .env.dev
-*__pycache__
+**\__pycache__
