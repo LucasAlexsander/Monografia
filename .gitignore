@@ -1,2 +1,10 @@
 .env.dev
 __pycache__/
+/documentos/__pycache__
+/documentos/migrations/__pycache__
+/documentos/migrations/__pycache__
+/equipe/__pycache__
+/equipe/migrations/__pycache__
+/home/__pycache__
+/home/migrations/__pycache__
+/monografias/__pycache__
